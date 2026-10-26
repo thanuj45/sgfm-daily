@@ -93,7 +93,7 @@ function exportCleanPDF() {
     };
     const money=id=>fmt(val(id));
     const subtotal=ids=>fmt(total(ids));
-    text('SGFM Daily Sheet',306,30,16,true,'center');
+    text('Daily Sheet',306,30,16,true,'center');
     line('Date',document.getElementById('date').value||'');
     line('Day',document.getElementById('day').value||'');
     y+=14;
