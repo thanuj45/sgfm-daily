@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SGFM Daily Sheet</title><style>*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f3f5f1;margin:0;padding:15px;color:#172017}.wrap{max-width:740px;margin:auto;background:white;padding:18px;border-radius:10px;box-shadow:0 2px 15px #0001}h1{text-align:center;font-size:25px;margin:10px 0 20px}h2{background:#a9cd91;text-align:center;padding:12px;margin:24px 0 0;border:2px solid #263826;border-bottom:0;font-size:18px}.date{display:grid;grid-template-columns:1fr 1fr;gap:10px}.date label{background:#a9cd91;padding:9px;border:1px solid #263826;font-weight:bold}.date input{display:block;width:100%;margin-top:6px;padding:9px;font-size:16px;border:1px solid #aaa;background:white}table{width:100%;border-collapse:collapse}td{border:2px solid #263826;padding:0}td:first-child{width:60%;background:#fff1c9;padding:9px 8px}td:last-child{width:40%}td input{width:100%;padding:10px 8px;text-align:right;border:0;font-size:17px;background:white}tr.subtotal td{background:#e6f0d9;font-weight:bold}tr.total td:first-child{background:#a9cd91;font-weight:bold}.final td{border-top-width:3px}.final output{font-weight:800}output{display:block;text-align:right;padding:10px 8px;font-size:17px;font-weight:bold}.short{color:#ad2525}.over{color:#176b35}.good{color:#176b35}.state-label{font-size:12px;font-weight:800;letter-spacing:.03em;display:block;margin-top:2px}.amount-line{display:block}.group td{background:#f5df9c!important;font-weight:bold}.summary{margin-top:24px}.summary td:first-child{background:#a9cd91;font-weight:bold}textarea{width:100%;min-height:80px;padding:10px;font-size:16px}button{border:0;border-radius:7px;padding:12px 18px;background:#2e6c38;color:white;font-size:16px;cursor:pointer}.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}.secondary{background:#555}small{display:block;color:#555;margin-top:12px}@media(max-width:440px){.wrap{padding:10px}td:first-child{font-size:14px}h2{font-size:16px}}@page{size:auto;margin:0}@media print{html,body{margin:0!important;padding:0!important;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.wrap{width:100%;max-width:none;padding:11mm 12mm!important;margin:0!important;border-radius:0;box-shadow:none}h1{margin:0 0 12px;font-size:21px}h2{padding:7px;margin-top:12px;font-size:16px}td:first-child{padding:5px 7px}td input{padding:5px 7px;font-size:14px}output{padding:5px 7px;font-size:14px}.date label{padding:5px}.date input{padding:5px}.summary{margin-top:14px}tr{break-inside:avoid;page-break-inside:avoid}thead,tbody{break-inside:auto}.summary{break-inside:avoid;page-break-inside:avoid} .group{break-after:avoid;page-break-after:avoid}h2{break-after:avoid;page-break-after:avoid}textarea{min-height:55px}button,small,.actions{display:none!important}input{color:black!important}}</style></head><body><main class="wrap"><h1>SGFM Daily Sheet</h1><div class="date"><label>Date<input type="date" id="date"></label><label>Day<input id="day" readonly></label></div><h2>SECTION A</h2><table id="a"></table><h2>SECTION B</h2><table id="b"></table><table class="summary"><tr><td>Total Daily Sales</td><td><output id="sales">$0.00</output></td></tr><tr><td>OVER / SHORT (C)</td><td><output id="difference">$0.00</output></td></tr><tr><td>Game Money Added Extra</td><td><input id="gameextra" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="Game Money Added Extra"></td></tr><tr><td>People Tabs</td><td><input id="peopletabs" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="People Tabs"></td></tr><tr><td>Money Taken From Back</td><td><input id="backtaken" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="Money Taken From Back"></td></tr><tr><td>Money Added to Back</td><td><input id="backadded" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="Money Added to Back"></td></tr><tr><td>Other Money Owe</td><td><input id="otherowe" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="Other Money Owe"></td></tr><tr class="total final"><td>FINAL OVER / SHORT</td><td><output id="finaldifference">$0.00</output></td></tr></table><p><strong><u>Notes:</u></strong></p><textarea id="notes" placeholder="Enter notes here..."></textarea><div class="actions"><button onclick="exportCleanPDF()">Download Clean PDF</button><button onclick="clearForm()" class="secondary">Clear Fields</button></div><small>Download Clean PDF creates a document without browser date, time, website address, or page-number headers. Internet access is required to load the PDF generator. No online storage or employee login. Short is shown as a negative amount; over is positive. Entries stay on the page only while it remains open; print or save a PDF before closing.</small></main><script>
+const A=[['tax1','Taxable Sales 1'],['tax2','Taxable Sales 2'],['ice1','ICEBAG 1'],['ice2','ICEBAG 2'],['non1','NON TAX 1'],['non2','NON TAX 2'],['pills1','Pills 1'],['pills2','Pills 2'],['salestax1','Sales Tax 1'],['salestax2','Sales Tax 2'],['atm1','ATM Fee 1'],['atm2','ATM Fee 2'],['lottery','Lottery'],['lucky','Lucky Game'],['lotto','Lotto Sales']];
+const B=[['cc1','Credit Card 1'],['cc2','Credit Card 2'],['altri1','Altri 1'],['altri2','Altri 2'],['loyal1','Loyal 1'],['loyal2','Loyal 2'],['alpvd1','ALPVD 1'],['alpvd2','ALPVD 2'],['shop1','Shop Expenses 1'],['grocery','Grocery Expense'],['drawcash','Draw Game Cashes'],['scratchcash','Scratch Cashes'],['drawcredit','Draw Game Credit'],['match1','Match 1'],['match2','Match 2'],['cash','Sale Cash Balance']];
+const lotteryPayout=['drawcash','scratchcash','drawcredit'];const adjustmentIds=['gameextra','peopletabs','backadded','otherowe'];const nonTax=['ice1','ice2','non1','non2','pills1','pills2'];const fmt=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);const val=id=>Number(document.getElementById(id)?.value)||0;const total=ids=>ids.reduce((sum,id)=>sum+val(id),0);
+function row(id,label){return `<tr><td>${label}</td><td><input id="${id}" type="number" inputmode="decimal" step="0.01" placeholder="0.00" aria-label="${label}"></td></tr>`}
+let aHTML=row(...A[0])+row(...A[1])+`<tr class="group"><td colspan="2">Non-Tax Sales</td></tr>`+A.slice(2,8).map(x=>row(...x)).join('')+`<tr class="subtotal"><td>Non-Tax Total</td><td><output id="nontax">$0.00</output></td></tr>`+A.slice(8).map(x=>row(...x)).join('')+`<tr class="total"><td>(A) Total</td><td><output id="atotal">$0.00</output></td></tr>`;
+document.getElementById('a').innerHTML=aHTML;document.getElementById('b').innerHTML=B.map(x=>lotteryPayout.includes(x[0])&&x[0]==='drawcash'?'<tr class="group"><td colspan="2">Lottery Payout</td></tr>'+row(...x):row(...x)).join('').replace(row('drawcredit','Draw Game Credit'),row('drawcredit','Draw Game Credit')+'<tr class="subtotal"><td>Lottery Payout Total</td><td><output id="lotterysubtotal">$0.00</output></td></tr>')+`<tr class="total"><td>(B) Total</td><td><output id="btotal">$0.00</output></td></tr>`;
+function showBalance(id,amount){const el=document.getElementById(id);el.replaceChildren();const money=document.createElement('span');money.className='amount-line';money.textContent=(amount>0?'+':'')+fmt(amount);const status=document.createElement('span');status.className='state-label';status.textContent=amount<0?'SHORT':amount>0?'OVER':'BALANCED';el.classList.toggle('short',amount<0);el.classList.toggle('over',amount>0);el.classList.toggle('good',amount===0);el.append(money,status)}
+function calc(){let a=total(A.map(x=>x[0])),b=total(B.map(x=>x[0]));document.getElementById('nontax').textContent=fmt(total(nonTax));document.getElementById('lotterysubtotal').textContent=fmt(total(lotteryPayout));document.getElementById('atotal').textContent=fmt(a);document.getElementById('btotal').textContent=fmt(b);document.getElementById('sales').textContent=fmt(total(['tax1','tax2',...nonTax,'atm1','atm2']));const diff=Math.round((b-a)*100)/100;showBalance('difference',diff);const extras=Math.round(total(adjustmentIds)*100)/100;const final=Math.round((diff+extras-val('backtaken'))*100)/100;showBalance('finaldifference',final);}
+function updateDay(){const d=document.getElementById('date').value;document.getElementById('day').value=d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'long'}):''}function clearForm(){if(!confirm('Clear all entered amounts and notes?'))return;document.querySelectorAll('table input[type=number]').forEach(x=>x.value='');document.getElementById('notes').value='';calc()}
+document.querySelectorAll('table input[type=number]').forEach(x=>x.addEventListener('input',calc));document.getElementById('date').addEventListener('change',updateDay);let now=new Date();document.getElementById('date').value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;updateDay();calc();
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script>
+function exportCleanPDF(){
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    alert('The PDF generator could not load. Please check your internet connection and try again.');
+    return;
+  }
+  const doc = new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'letter'});
+  const pageWidth=215.9, pageHeight=279.4, left=13, right=13, width=pageWidth-left-right;
+  const green=[169,205,145], yellow=[255,241,201], light=[230,240,217], ink=[23,32,23];
+  let y=13;
+  function newPageIfNeeded(h){if(y+h>pageHeight-14){doc.addPage();y=13;}}
+  function title(t){newPageIfNeeded(15);doc.setFont('helvetica','bold');doc.setTextColor(...ink);doc.setFontSize(16);doc.text(t,pageWidth/2,y+6,{align:'center'});y+=14;}
+  function head(label){newPageIfNeeded(11);doc.setFillColor(...green);doc.setDrawColor(38,56,38);doc.rect(left,y,width,10,'FD');doc.setTextColor(...ink);doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text(label,pageWidth/2,y+6.6,{align:'center'});y+=10;}
+  function line(label,value,opt={}){
+    const h=8;newPageIfNeeded(h);
+    const fill=opt.group?[245,223,156]:opt.total?green:opt.subtotal?light:yellow;
+    doc.setFillColor(...fill);doc.setDrawColor(38,56,38);doc.setLineWidth(0.3);
+    doc.rect(left,y,width*0.60,h,'FD');doc.setFillColor(opt.total?light:[255,255,255]);doc.rect(left+width*0.60,y,width*0.40,h,'FD');
+    doc.setTextColor(...ink);doc.setFontSize(9);
+    doc.setFont('helvetica',opt.bold||opt.total||opt.subtotal?'bold':'normal');
+    doc.text(label,left+2.5,y+5.4);
+    if(value!==null&&value!==undefined) doc.text(String(value),pageWidth-right-2.5,y+5.4,{align:'right'});
+    y+=h;
+  }
+  const money=id=>fmt(val(id));
+  const subtotal=ids=>fmt(total(ids));
+  title('SGFM Daily Sheet');
+  const date=document.getElementById('date').value || '';
+  const day=document.getElementById('day').value || '';
+  line('Date',date);line('Day',day);
+  head('SECTION A');
+  A.forEach(([id,label],i)=>{
+    if(i===2)line('NON-TAX SALES',null,{group:true});
+    line(label,money(id));
+    if(i===7)line('Non-Tax Total',subtotal(nonTax),{subtotal:true});
+  });
+  line('(A) Total',subtotal(A.map(x=>x[0])),{total:true});
+  head('SECTION B');
+  B.forEach(([id,label])=>{
+    if(id==='drawcash')line('LOTTERY PAYOUT',null,{group:true});
+    line(label,money(id));
+    if(id==='drawcredit')line('Lottery Payout Total',subtotal(lotteryPayout),{subtotal:true});
+  });
+  line('(B) Total',subtotal(B.map(x=>x[0])),{total:true});
+  head('DAILY SUMMARY');
+  line('Total Daily Sales',document.getElementById('sales').textContent,{total:true});
+  function balanceForPDF(el){let amount=el.querySelector('.amount-line')?.textContent ?? el.textContent.trim();let status=el.querySelector('.state-label')?.textContent;return status?amount+' '+status:amount;}
+  line('OVER / SHORT (C)',balanceForPDF(document.getElementById('difference')),{total:true});
+  [['gameextra','Game Money Added Extra'],['peopletabs','People Tabs'],['backtaken','Money Taken From Back'],['backadded','Money Added to Back'],['otherowe','Other Money Owe']].forEach(([id,label])=>line(label,money(id)));
+  line('FINAL OVER / SHORT',balanceForPDF(document.getElementById('finaldifference')),{total:true});
+  const notes=document.getElementById('notes').value.trim();
+  if(notes){
+    newPageIfNeeded(13);y+=5;
+    doc.setTextColor(...ink);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('Notes:',left,y);y+=5;
+    doc.setFont('helvetica','normal');doc.setFontSize(9);
+    const lines=doc.splitTextToSize(notes,width-3);
+    for(const ln of lines){newPageIfNeeded(5);doc.text(ln,left,y);y+=5;}
+  }
+  doc.save('SGFM_Daily_Sheet_'+(date||'report')+'.pdf');
+}
+</script></body></html>
