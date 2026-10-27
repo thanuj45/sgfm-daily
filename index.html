@@ -147,7 +147,7 @@ function exportCleanPDF() {
     const blob=new Blob([pdf],{type:'application/pdf'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
-    a.href=url;a.download='SGFM_Daily_Sheet_'+(document.getElementById('date').value||'report')+'.pdf';
+    a.href=url;a.download='Daily_Sheet_'+(document.getElementById('date').value||'report')+'.pdf';
     document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),60000);
   } catch(err){
